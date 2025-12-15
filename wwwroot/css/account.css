@@ -1,0 +1,59 @@
+.box-account{
+	max-width: 570px;
+	margin: 32px auto 32px auto;
+	padding: 32px;
+	border-radius: 8px;
+}
+.box-account .invalid-feedback{
+	font-size: 14px;
+	margin-top: 8px;
+}
+.login-by-phone input{
+	height: 48px;
+	color: #929495;
+	font-size: 14px;
+	background-position: 16px !important;
+	padding-left: 56px;
+	border-radius: 8px;
+}
+.login-by-social ul li .btn-login-box{
+	height: 48px;
+	width: 158px;
+	border-radius: 8px;
+	background-color: #4267B2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	color: #fff;
+	text-transform: uppercase;
+}
+.login-by-social ul li .btn-login-gg{
+	background: #FB5346;
+}
+.login-by-social ul li .btn-login-zalo{
+	background: #0267FB;
+}
+.login-by-social ul li img{
+	margin-right: 4px;
+}
+.login-btn{
+	width: 100%;
+	height: 48px;
+	text-transform: uppercase;
+}
+.input-user{
+	background: url('../images/icon/ic-phone.svg') no-repeat !important;
+}
+.input-password{
+	background: url('../images/icon/ic-phone.svg') no-repeat !important;
+}
+.input-name{
+	background: url('../images/icon/ic-user.svg') no-repeat !important;
+}
+.input-email{
+	background: url('../images/icon/ic-email.svg') no-repeat !important;
+}
+.input-phone{
+	background: url('../images/icon/ic-phone.svg') no-repeat !important;
+}

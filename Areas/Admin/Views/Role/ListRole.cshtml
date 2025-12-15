@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ApplicationRole>
+@{
+    ViewData["Title"] = "ListRole";
+    int i = 0;
+}
+<section class="content-header">
+    <h1>
+        Role
+        <small>Danh sách role</small>
+    </h1>
+</section>
+<section class="content container-fluid">
+
+    @if (Model.Any())
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-primary pull-right" asp-controller="role" asp-action="CreateRole">Tạo role</a>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-body no-padding">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="50px">Stt</th>
+                                    <th width="150px">Tên</th>
+                                    <th>Mô tả</th>
+                                    <th width="50px"></th>
+                                    @*<th width="50px"></th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@(++i)</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Description</td>
+                                        <td>
+                                            <a class="btn btn-primary" asp-controller="role" asp-action="EditRole" asp-route-id="@item.Id">Sửa</a>
+                                        </td>
+                                        @*<td>
+                                            <form method="post" asp-action="DeleteRole" asp-route-id="@item.Id">
+                                                <button class="btn btn-danger" onclick="return confirm('Chắc chắn xóa role này???')"><i class="fa fa-trash"></i> Xóa</button>
+                                            </form>
+                                        </td>*@
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+    else
+    {
+<div style="padding:10px" class="box box-success">
+    <div class="box-body">
+        <h4>Chưa có role</h4>
+        <h5 class="card-title">Bấm vào nút dưới để thêm role</h5>
+        <a class="btn btn-primary mb-3" asp-controller="role" asp-action="CreateRole" >Thêm Role</a>
+    </div>
+</div>
+    }
+</section>

@@ -1,0 +1,99 @@
+﻿@model minhlamcons.Models.Database.TbPage
+@{
+    ViewData["Title"] = "EditPage";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<section class="content-header">
+    <h1>
+        Trang
+        <small>Cập nhật trang</small>
+    </h1>
+</section>
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" value="@Model.Id" />
+                <input type="hidden" asp-for="CreatedBy" value="@Model.CreatedBy" />
+                <input type="hidden" asp-for="CreatedDate" value="@Model.CreatedDate" />
+                <input type="hidden" asp-for="Delete" value="@Model.Delete" />
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" value="@Model.Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Des"></label>
+                    <input asp-for="Des" class="form-control" value="@Model.Des" />
+                    <span asp-validation-for="Des" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Url"></label>
+                    <input asp-for="Url" class="form-control" value="@Model.Url" />
+                    <span asp-validation-for="Url" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ParentId"></label>
+                    <select asp-for="ParentId" class="form-control" asp-items="@(new SelectList(ViewBag.LstParent,"Id","Name"))"></select>
+                    <span asp-validation-for="ParentId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Order"></label>
+                    <input asp-for="Order" class="form-control" value="@Model.Order" />
+                    <span asp-validation-for="Order" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PageType"></label>
+                    <select asp-for="PageType" class="form-control">
+                        <option value="@PageType.NONE">@EnumExtensions.GetDescription(PageType.NONE)</option>
+                        <option value="@PageType.MinhLam_DuAn">@EnumExtensions.GetDescription(PageType.MinhLam_DuAn)</option>
+
+                        <option value="@PageType.MinhLam_TinTuc">@EnumExtensions.GetDescription(PageType.MinhLam_TinTuc)</option>
+
+                        <option value="@PageType.MinhLam_TuyenDung">@EnumExtensions.GetDescription(PageType.MinhLam_TuyenDung)</option>
+
+                        <option value="@PageType.MinhLam_LienHe">@EnumExtensions.GetDescription(PageType.MinhLam_LienHe)</option>
+                        <option value="@PageType.MinhLam_TinMacDinh">@EnumExtensions.GetDescription(PageType.MinhLam_TinMacDinh)</option>
+                    </select>
+                    <span asp-validation-for="PageType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ShowHomePage"></label>
+                    <input asp-for="ShowHomePage" class="form-control" value="@Model.ShowHomePage" />
+                    <span asp-validation-for="ShowHomePage" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IsSidebar"></label>
+                    <input type="checkbox" asp-for="IsSidebar" class="checkbox" />
+                    <span asp-validation-for="IsSidebar" class="text-danger"></span>
+                </div>
+                
+                <hr />
+                <p>--SEO--</p>
+                <div class="form-group">
+                    <label asp-for="SEOTitle"></label>
+                    <input asp-for="SEOTitle" class="form-control" value="@Model.SEOTitle" />
+                    <span asp-validation-for="SEOTitle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SEODescription"></label>
+                    <input asp-for="SEODescription" class="form-control" value="@Model.SEODescription" />
+                    <span asp-validation-for="SEODescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SEOKeyword"></label>
+                    <input asp-for="SEOKeyword" class="form-control" value="@Model.SEOKeyword" />
+                    <span asp-validation-for="SEOKeyword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="H1Tag"></label>
+                    <input asp-for="H1Tag" class="form-control" value="@Model.H1Tag" />
+                    <span asp-validation-for="H1Tag" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Lưu</button>
+            </form>
+        </div>
+    </div>
+</section>
+

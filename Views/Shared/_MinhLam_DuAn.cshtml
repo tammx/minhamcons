@@ -1,0 +1,59 @@
+﻿@model NewsViewModel
+@{
+    ViewData["Controller"] = "Home";
+    ViewData["Action"] = "ShowPage";
+    <title>@Model.PageTitle</title>
+    <meta property="og:title" content="@Model.PageSEOTitle" />
+    <meta property="og:description" content="@Model.PageSEODes" />
+    <meta http-equiv="keywords" name="keywords" content="@Model.PageSEOKeyword" />
+    <meta http-equiv="description" name="description" content="@Model.PageSEODes" />
+    <meta name="author" content="MINHLAMCONS.COM">
+}
+<div class="row">
+    <div class="col-md-12">
+        <p class="pagetitle" style="text-transform:uppercase">@Model.PageTitle</p>
+        <hr class="pageline" />
+        <p class="pagedes">@Model.PageDes</p>
+        <div class="row">
+            <div class="col-md-3">
+                @if (Model.LstNews.Data.Any())
+                {
+                    <p class="sidebartitle">DANH MỤC DỰ ÁN</p>
+                    <ul class="sidebarNav">
+                        @foreach (var item in Model.LstPageChild)
+                        {
+                            <li><a href="@item.Url">@item.Name</a></li>
+                        }
+                    </ul>
+                }
+            </div>
+            <div class="col-md-9">
+                @if (Model.LstNews.Data.Any())
+                {
+                    <div class="row">
+                        @foreach (var item in Model.LstNews.Data)
+                        {
+                            <div class="col-md-4 postdetail">
+                                <img class="img-fluid" style="height:126px" src="~/uploads/news/@item.Image" />
+                                <div class="text">
+                                    <a class="title" title="@item.Name" href="/@item.Url">
+                                        @(item.Name.Length>29? (item.Name.Substring(0, 28) + "...") : item.Name)
+                                    </a>
+                                    <hr />
+                                    <p>@(item.Des!=null?(item.Des.Length>60?(item.Des.Substring(0,60)+"...") :item.Des): "...")</p>
+                                    <a class="btn" href="/@item.Url">Xem thêm</a>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+
+                    <div>
+                        <partial name="_PaginationPartial" view-data="ViewData" model="Model.LstNews" />
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>

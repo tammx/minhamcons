@@ -1,0 +1,99 @@
+﻿@model TbSiteSetting
+@{
+    ViewData["Title"] = "EditSiteSetting";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<section class="content-header">
+    <h1>
+        Cấu hình website
+        <small>Cập nhật</small>
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post" action="EditCauHinhWebsite">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" value="@Model.Id" />
+                <input type="hidden" asp-for="CreatedBy" value="@Model.CreatedBy" />
+                <input type="hidden" asp-for="CreatedDate" value="@Model.CreatedDate" />
+                <input type="hidden" asp-for="Delete" value="@Model.Delete" />
+                <div class="form-group">
+                    <label>Loại cấu hình</label>
+                    <input type="text" value="@ViewBag.LoaiCauHinh" class="form-control" disabled />
+                </div>
+
+                <div class="form-group" id="noidung_ele">
+                    @if (Model.Id == SiteSettingCode.LOGO)
+                    {
+                        <label>Nội dung</label>
+                        <input type="text" asp-for="Content" class="form-control" readonly style="margin-bottom: 5px;">
+                        <div class="custom-file">
+                            <img height="150" src="/uploads/sitesetting/@Model.Content" id="img_up" /><br />
+                            <label class="custom-file" style="margin-top: 5px;">Chọn file</label>
+                            <input asp-for="Content" class="form-control custom-file-input" id="files" name="files" type="file" onchange="uploadImage();" accept="image/*" />
+                        </div>
+                    }
+                    else if (Model.Id == SiteSettingCode.SLIDER)
+                    {
+                        <label>Nội dung</label>
+                        var banerImage = Model.Content?.Split(',');
+                        <input type="text" asp-for="Content" class="form-control" style="margin-bottom: 5px;" readonly>
+                        <div class="image_container">
+                            @if (banerImage != null && banerImage.Any())
+                            {
+                                foreach (var item in banerImage)
+                                {
+                                    if (!string.IsNullOrEmpty(item))
+                                    {
+                                        <input type="checkbox" class="remove-image-check" value="@item" />
+                                        <img height="150" id="@item" class="img_ct_up" src="/uploads/sitesetting/@item" />
+                                    }
+                                }
+                            }
+                        </div>
+                        <button type="button" class="btn btn-danger btn-remove-img" onclick="removeImage()">Remove</button>
+                        <div class="custom-file"><input class="form-control custom-file-input" id="image-slider" accept="image/*" type="file" onchange="uploadBanerImage();" /></div>
+                    }
+                    else
+                    {
+                        <label>Nội dung</label>
+                        <textarea asp-for="Content" class="form-control" style="min-height:600px"></textarea>
+                    }
+                </div>
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .img_ct_up {
+        margin-right: 20px;
+        margin-bottom: 10px;
+    }
+
+    .btn-remove-img {
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-bottom: 10px;
+        width: 80px;
+        height: 30px;
+    }
+
+    .image_container {
+        height: auto;
+    }
+</style>
+
+<script>
+     const urls = {
+        UploadImage: '@Url.Action("UploadImage", "SiteSetting")',
+        DeleteCauHinhImage: '@Url.Action("DeleteImage", "SiteSetting")'
+    }
+</script>
+<script src="~/dist/js/admin/CauHinhWebsite.js"></script>
+
+

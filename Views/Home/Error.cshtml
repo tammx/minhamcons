@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "_LayoutBlank";
+    ViewData["Title"] = "Lỗi xảy ra";
+}
+<title>@ViewBag.Title</title>
+<div id="main-content" class="w-100 float-left bg-grey ">
+    <div class="box-account bg-white">
+        <div class="d-flex justify-content-center align-items-center" id="main">
+            <h1 class="mr-3 pr-3 align-top border-right inline-block align-content-center display-3" style="color:#61BE5A">@ViewBag.ErrorCode</h1>
+            <div class="inline-block align-middle">
+                <h2 class="font-weight-normal lead" id="desc">@ViewBag.ErrorMessage</h2>
+                <a href="@Url.Action("", "home")" class="color-green">Quay lại trang chủ</a>
+            </div>
+        </div>
+    </div>
+</div>

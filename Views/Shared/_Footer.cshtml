@@ -1,0 +1,70 @@
+﻿@inject minhlamcons.Services.ISiteSettingService siteSettingService;
+@{
+    var siteSettingValue = siteSettingService.GetSiteSetting();
+    var logocongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.LOGO) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.LOGO] : "";
+    var tencongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.TENCONGTY) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.TENCONGTY] : "";
+    var motacongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.MOTACONGTY) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.MOTACONGTY] : "";
+    var diachicongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.DIACHI) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.DIACHI] : "";
+    var dienthoaicongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.SODIENTHOAI) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.SODIENTHOAI] : "";
+    var emailcongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.EMAIL) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.EMAIL] : "";
+    var banquyencongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.COPYRIGHT) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.COPYRIGHT] : "";
+    var fbcongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.FACEBOOK) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.FACEBOOK] : "";
+    var ytcongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.YOUTUBE) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.YOUTUBE] : "";
+    var twtcongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.TWITTER) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.TWITTER] : "";
+    var inscongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.INSTAGRAM) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.INSTAGRAM] : "";
+    var mescongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.FBMESSENGER) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.FBMESSENGER] : "";
+    var footerlink = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.LINK_FOOTER) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.LINK_FOOTER] : "";
+}
+<footer class="footer">
+    <div class="container" style="padding:0">
+        <div class="row" style="margin-right:0!important;margin-left:0!important">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-2" style="background-color:#fff">
+                        <img class="footerlogo img-fluid" src="~/uploads/sitesetting/@logocongty" />
+                    </div>
+                    <div class="col-md-4 footer-col">
+                        <p class="title">
+                            @tencongty
+                        </p>
+                        <hr />
+                        <div class="content">
+                            @Html.Raw(motacongty)
+                        </div>
+                    </div>
+                    <div class="col-md-4 footer-col">
+                        <p class="title">
+                            Thông tin liên hệ:
+                        </p>
+                        <div class="content">
+                            <span style="font-weight:600;">Add:</span> @diachicongty<br />
+                            <span style="font-weight:600;">Tell:</span> @dienthoaicongty<br />
+                            <span style="font-weight:600;">Email:</span> @emailcongty
+                        </div>
+                    </div>
+                    <div class="col-md-2 footer-col">
+                        @Html.Raw(footerlink)
+                        
+                    </div>
+                </div>
+                <hr class="bigline" />
+                <div class="row">
+                    <div class="col-md-8" style="padding: 0;color: #ccc;">
+                        @banquyencongty
+                    </div>
+                    <div class="col-md-4 ico">
+                        <a href="@inscongty"><img src="~/img/ico_ins.png" /></a>
+                        <a href="@twtcongty"><img src="~/img/ico_twt.png" /></a>
+                        <a href="@ytcongty"><img src="~/img/ico_ytb.png" /></a>
+                        <a href="@fbcongty"><img src="~/img/ico_fb.png" /></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="hotline">
+        <img src="~/img/ico_phone.png" /><span>@dienthoaicongty</span>
+    </div>
+    @Html.Raw(mescongty)
+</footer>

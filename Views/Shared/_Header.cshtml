@@ -1,0 +1,60 @@
+﻿@model List<HeaderViewModel>
+@inject minhlamcons.Services.ISiteSettingService siteSettingService;
+@{
+    var siteSettingValue = siteSettingService.GetSiteSetting();
+    var logocongty = siteSettingValue.ContainsKey(minhlamcons.Models.SiteSettingCode.LOGO) ? siteSettingValue[minhlamcons.Models.SiteSettingCode.LOGO] : "";
+}
+@if (Model.Any())
+{
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+
+                <img alt="Logo" style="width:70px;" src="~/uploads/sitesetting/@logocongty" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    @foreach (var item in Model)
+                    {
+                        if (item.Child.Count > 0)
+                        {
+                            <li class="perfect-1 nav-item dropdown">
+                                <a class="nav-link text-dark" href="@item.Url">@item.Name</a>
+                                <div class="dropdown-menu">
+                                    @foreach (var subitem in item.Child)
+                                    {
+                                        <a class="dropdown-item" href="@subitem.Url">@subitem.Name</a>
+                                    }
+
+                                </div>
+                            </li>
+                            <li class="perfect-2 dropdown nav-item">
+                                <a class="dropdown-toggle" data-toggle="dropdown">@item.Name <span class="caret"></span></a>
+                                <div class="dropdown-menu">
+                                    @foreach (var subitem in item.Child)
+                                    {
+                                        <a class="dropdown-item" href="@subitem.Url">@subitem.Name</a>
+                                    }
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="@item.Url">@item.Name</a>
+                            </li>
+                        }
+                    }
+                    <li>
+                        <input id="search" placeholder="Tìm kiếm">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+}
+

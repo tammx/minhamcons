@@ -1,0 +1,109 @@
+﻿@model minhlamcons.Areas.Mod.ViewModels.AddNewsViewModel
+@{
+    ViewData["Title"] = "EditNews";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<section class="content-header">
+    <h1>
+        Bài viết
+        <small>Cập nhật bài viết</small>
+    </h1>
+</section>
+<section class="content container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" asp-for="NewsDetail.Id" value="@Model.NewsDetail.Id" />
+                    <input type="hidden" asp-for="NewsDetail.CreatedBy" value="@Model.NewsDetail.CreatedBy" />
+                    <input type="hidden" asp-for="NewsDetail.CreatedDate" value="@Model.NewsDetail.CreatedDate" />
+                    <input type="hidden" asp-for="NewsDetail.Image" value="@Model.NewsDetail.Image" />
+                    <div class="form-group">
+                        <label>Hình ảnh</label>
+                        <div class="custom-file">
+                            <img src="/uploads/news/@Model.NewsDetail.Image" /><br />
+                            <input asp-for="Photo" class="form-control custom-file-input" />
+                            <label class="custom-file" -label>Chọn file</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NewsDetail.Name"></label>
+                        <input id="txtName" asp-for="NewsDetail.Name" class="form-control" value="@Model.NewsDetail.Name" onchange="generateUrl()" />
+                        <span asp-validation-for="NewsDetail.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NewsDetail.Url"></label>
+                        <input id="txtUrl" asp-for="NewsDetail.Url" class="form-control" />
+                        <span asp-validation-for="NewsDetail.Url" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NewsDetail.Des"></label>
+                        <input asp-for="NewsDetail.Des" class="form-control" value="@Model.NewsDetail.Des" />
+                        <span asp-validation-for="NewsDetail.Des" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NewsDetail.Content">Nội dung</label>
+                        <div class="row">
+                            <div class="col-md-9">
+                                @Html.TextArea("NewsDetail.Content", null)
+                            </div>
+                        </div>
+                        <span asp-validation-for="NewsDetail.Content" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NewsDetail.PageId"></label>
+                        <select asp-for="NewsDetail.PageId" class="form-control" asp-items="@(new SelectList(ViewBag.LstPage,"Id","Name"))"></select>
+                        <span asp-validation-for="NewsDetail.PageId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NewsDetail.IsHot"></label>
+                        <input type="checkbox" asp-for="NewsDetail.IsHot" class="checkbox" />
+                        <span asp-validation-for="NewsDetail.IsHot" class="text-danger"></span>
+                    </div>
+                    <hr />
+                    <p>--SEO--</p>
+                    <div class="form-group">
+                        <label asp-for="NewsDetail.SEOTitle"></label>
+                        <input asp-for="NewsDetail.SEOTitle" class="form-control" value="@Model.NewsDetail.SEOTitle" />
+                        <span asp-validation-for="NewsDetail.SEOTitle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NewsDetail.SEODescription"></label>
+                        <input asp-for="NewsDetail.SEODescription" class="form-control" value="@Model.NewsDetail.SEODescription" />
+                        <span asp-validation-for="NewsDetail.SEODescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NewsDetail.SEOKeyword"></label>
+                        <input asp-for="NewsDetail.SEOKeyword" class="form-control" value="@Model.NewsDetail.SEOKeyword" />
+                        <span asp-validation-for="NewsDetail.SEOKeyword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NewsDetail.H1Tag"></label>
+                        <input asp-for="NewsDetail.H1Tag" class="form-control" value="@Model.NewsDetail.H1Tag" />
+                        <span asp-validation-for="NewsDetail.H1Tag" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    CKEDITOR.replace("NewsDetail.Content", {
+        filebrowserBrowseUrl: '/CKEditorUpload/GetImage/ckeditor',
+        filebrowserUploadUrl: '/CKEditorUpload/UploadImage/ckeditor'
+    });
+    function generateUrl() {
+        $.ajax({
+            type: "post",
+            url: "/Mod/News/GenerateUrl",
+            data: { text: $('#txtName').val() },
+            success: function (resp) {
+                console.log(resp);
+                $('#txtUrl').val(resp);
+            }
+        });
+    }
+</script>
+

@@ -1,0 +1,123 @@
+﻿@model HomeViewModel
+@{
+    <title>@Model.SEOTitle</title>
+    <meta property="og:title" content="@Model.SEOTitle" />
+    <meta property="og:description" content="@Model.SEODescription" />
+    <meta http-equiv="keywords" name="keywords" content="@Model.SEOKeyword" />
+    <meta http-equiv="description" name="description" content="@Model.SEODescription" />
+    <meta name="author" content="MINHLAMCONS.COM">
+}
+@section Css{
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <style>
+        .slick-prev:before, .slick-next:before {
+            color: #808080;
+        }
+
+        .slick-initialized .slick-slide {
+            padding: 5px;
+        }
+    </style>
+}
+@Html.Raw(Model.HOME_B1)
+@Html.Raw(Model.HOME_B2)
+<div class="container">
+    <div class="row" style="margin-right:0!important;margin-left:0!important;clear:both;margin-top:45px">
+        <div class="col-md-12 homepage" style="padding:0">
+            <p class="title"><a href="/du-an"><span style="border-bottom: solid 6px #2596be !important;">@Model.LST1.Title</span> <img src="~/img/ico_go.png" /></a></p>
+            @*<center><hr /></center>*@
+            <p class="des">
+                @Model.LST1.Des
+            </p>
+            <div class="slider responsive slick-slider" role="toolbar">
+                @foreach (var item in Model.LST1.News)
+                {
+                    <div>
+                        <a style="text-decoration:none;color:#000;font-weight:500" href="@item.Url">
+                            <img class="img-fluid" style="min-height:270px" src="~/uploads/news/@item.Image">
+                            <p style="margin-top:5px" title="@item.Name">@(item.Name.Length>37? (item.Name.Substring(0, 36) + "...") : item.Name)</p>
+                            <hr style="float:left" />
+                        </a>
+                    </div>
+                }
+            </div>
+            <div style="margin-top:15px;text-align:center;margin-top:35px">
+                @Html.Raw(Model.HOME_B3)
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-right:0!important;margin-left:0!important;margin-top:45px">
+        <div class="col-md-12 homepage">
+            <p class="title"><a href="/tin-tuc-su-kien"><span style="border-bottom: solid 6px #2596be !important;">@Model.LST2.Title</span> <img src="~/img/ico_go.png" /></a></p>
+            @*<center><hr /></center>*@
+            <div class="row tintuchome">
+                <div class="col-md-6 bignews">
+                    <div style="background-image: url(../uploads/news/@Model.LST2.News[0].Image);background-size: cover;height:240px"></div>
+                    <div>
+                        <a style="text-decoration: none;color: #000;padding-top: 10px;display: block;" href="@Model.LST2.News[0].Url">
+                            <p class="title">@(Model.LST2.News[0].Name.Length>30? (Model.LST2.News[0].Name.Substring(0, 30) + "...") : Model.LST2.News[0].Name)</p>
+                        </a>
+                        <hr/>
+                        <p class="des">@(Model.LST2.News[0].Des.Length>150?(Model.LST2.News[0].Des.Substring(0,150)+"...") : Model.LST2.News[0].Des)</p>
+                    </div>
+                </div>
+                <div class="col-md-6" style="padding:0;padding-left:15px">
+                    <div class="row item">
+                        <div class="col-md-4 col-sm-12 img"><img class="img-fluid" style="height:126px" src="~/uploads/news/@Model.LST2.News[1].Image" /></div>
+                        <div class="col-md-8 col-sm-12 text">
+                            <a href="@Model.LST2.News[1].Url">@Model.LST2.News[1].Name</a>
+                        </div>
+                    </div>
+                    <div class="row item middle">
+                        <div class="col-md-4 col-sm-12 img"><img class="img-fluid" src="~/uploads/news/@Model.LST2.News[2].Image" /></div>
+                        <div class="col-md-8 col-sm-12 text">
+                            <a href="@Model.LST2.News[2].Url">@Model.LST2.News[2].Name</a>
+                        </div>
+                    </div>
+                    <div class="row item">
+                        <div class="col-md-4 col-sm-12 img"><img class="img-fluid" src="~/uploads/news/@Model.LST2.News[3].Image" /></div>
+                        <div class="col-md-8 col-sm-12 text">
+                            <a href="@Model.LST2.News[3].Url">@Model.LST2.News[3].Name</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="hrMore" />
+            <center><a href="/tin-tuc-su-kien" class="btnMore">Xem thêm</a></center>
+
+        </div>
+    </div>
+    <div id="doi-tac" class="row" style="margin-right:0!important;margin-left:0!important;margin-top:45px">
+        <div class="col-md-12 homepage">
+            <p class="title"><span style="border-bottom: solid 6px #2596be !important;">ĐỐI TÁC</span> <img src="~/img/ico_go.png" /></p>
+            @*<center><hr /></center>*@
+            <div class="row wrap_partner">
+                <div class="col-md-12 partner">
+                    @Html.Raw(Model.HOME_B4)
+                </div>
+            </div>
+            <div id="lienhe" class="row" style="margin-top:15px">
+                <div class="col-md-6 lienhebg">
+                    <div class="row">
+                        <div class="col-md-6" style="padding-right:0!important">
+                            <input type="text" placeholder="Họ tên (*)" />
+                            <input type="text" placeholder="Số điện thoại (*)" />
+                            <input type="text" placeholder="Email (*)" />
+                        </div>
+                        <div class="col-md-6">
+                            <textarea placeholder="Nội dung (*)"></textarea>
+                            <button>Gửi</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    @Html.Raw(Model.MAP)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

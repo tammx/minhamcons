@@ -1,0 +1,32 @@
+﻿@model ShowPageViewModel
+<div class="container">
+    @if (Model != null)
+    {
+        @if (Model.PageType == minhlamcons.Models.PageType.MinhLam_DuAn && Model.Article == true)
+        {
+            @Html.Partial("_MinhLam_DuAn_Article", (NewsDetailViewModel)Model.Data);
+        }
+        else if (Model.PageType == minhlamcons.Models.PageType.MinhLam_DuAn)
+        {
+            @Html.Partial("_MinhLam_DuAn", (NewsViewModel)Model.Data);
+        }
+        else if (Model.PageType == minhlamcons.Models.PageType.MinhLam_TinTuc && Model.Article == true)
+        {
+            @Html.Partial("_MinhLam_TinTuc_Article", (NewsDetailViewModel)Model.Data);
+        }
+        else if (Model.PageType == minhlamcons.Models.PageType.MinhLam_TinTuc)
+        {
+            @Html.Partial("_MinhLam_TinTuc", (NewsViewModel)Model.Data);
+        }
+        else if (Model.PageType == minhlamcons.Models.PageType.MinhLam_TuyenDung && Model.Article == false)
+        {
+            @Html.Partial("_MinhLam_TuyenDung", (NewsViewModel)Model.Data);
+        }
+        else
+        {
+            @Html.Partial("_MinhLam_TinMacDinh", (TbNews)Model.Data);
+        }
+    }
+</div>
+
+

@@ -1,0 +1,123 @@
+﻿@model minhlamcons.Areas.Mod.ViewModels.PageViewModel
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Controller"] = "Page";
+    ViewData["Action"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int i = 0;
+}
+<section class="content-header">
+    <h1>
+        Trang
+        <small>Danh sách trang</small>
+    </h1>
+</section>
+<section class="content container-fluid">
+
+    @if (Model.LstPage.Data.Any())
+    {
+        <div class="row">
+            <div class="col-md-6">
+                @if (ViewBag.LstParent != null)
+                {
+                    <div class="row">
+                        <div class="col-md-3 text-right"><span style="display:block;margin-top:7px">Trang cha </span></div>
+                        <div class="col-md-9"><select id="ddlParent" data-search="true" class="custom-select" asp-for="ParentId" asp-items="@(new SelectList(ViewBag.LstParent,"Id","Name"))"></select></div>
+                    </div>
+                }
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-primary pull-right" asp-controller="Page" asp-action="AddPage">Thêm mới trang</a>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-body no-padding">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="50px">Stt</th>
+                                    <th width="150px">Tên trang</th>
+                                    <th>Đường dẫn</th>
+                                    <th>Thứ tự</th>
+                                    <th>Loại</th>
+                                    <th>Hiển thị trang chủ</th>
+                                    <th width="50px"></th>
+                                    <th width="50px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.LstPage.Data)
+                                {
+                                    <tr>
+                                        <td>@(++i)</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Url</td>
+                                        <td>@item.Order</td>
+                                        <td>@EnumExtensions.GetDescription(item.PageType)</td>
+                                        <td>@item.ShowHomePage</td>
+                                        <td>
+                                            <a class="btn btn-primary" asp-controller="page" asp-action="editpage" asp-route-id="@item.Id">Sửa</a>
+                                        </td>
+                                        <td>
+                                            <form method="post" asp-action="deletepage" asp-route-id="@item.Id">
+                                                <button class="btn btn-danger" onclick="return confirm('Chắc chắn xóa trang này???')"><i class="fa fa-trash"></i> Xóa</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div style="margin-left:10px">
+                            <partial name="_PaginationPartial" view-data="ViewData" model="Model.LstPage" />
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <div style="padding:10px" class="box box-success">
+            <div class="box-body">
+                <h4>Chưa có trang nào</h4>
+                <h5 class="card-title">Bấm vào nút dưới để thêm trang</h5>
+                <a class="btn btn-primary mb-3" asp-controller="page" asp-action="AddPage">Thêm Trang</a>
+            </div>
+        </div>
+    }
+</section>
+@section scripts{
+    <link href="~/lib/jquery/dist/jquery-customselect-1.9.1.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery-customselect-1.9.1.min.js"></script>
+    <script>
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+                function (m, key, value) {
+                    vars[key] = value;
+                });
+            return vars;
+        }
+
+
+        $(document).ready(function () {
+            $('#ddlParent').change(function () {
+                var val = $(this).val();
+                //var parentid = getUrlVars()["parentid"];
+                var newUrl = "@Url.Action("", "Page")" + "?parentid=" + val;
+                location.href = newUrl;
+            });
+            $('#ddlParent').customselect({
+                search: true,
+                hoveropen: false
+            });
+        });
+
+        
+    </script>
+}
+

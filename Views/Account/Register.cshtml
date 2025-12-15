@@ -1,0 +1,63 @@
+﻿@using Microsoft.AspNetCore.Http.Extensions
+@model RegisterViewModel
+@{
+    Layout = "_LayoutBlank";
+    ViewData["Title"] = "Đăng ký tài khoản";
+    <meta property="og:title" content="Đăng ký tài khoản xetot.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="@Context.Request.GetEncodedUrl()" />
+    <meta property="og:image" content="/uploads/cauhinhwebsite/a1346de2-0d6f-4f73-9a29-686cc0cbf8bf_logo.png" />
+    <title>Đăng ký tài khoản xetot.com</title>
+    <meta name="description" content="Đăng ký tài khoản xetot.com" />
+}
+@section Css
+{
+    <link rel="stylesheet" href="~/css/account.css">
+}
+<div id="main-content" class="w-100 float-left bg-grey">
+    <div class="box-account bg-white">
+        <h1 class="xt-title-list text-center">Đăng ký</h1>
+        <div class="login-by-phone">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="HoTen" class="form-control input-name" placeholder="Nhập họ tên">
+                    <span asp-validation-for="HoTen" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Email" class="form-control input-email" placeholder="Nhập email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Mobile" class="form-control input-phone" placeholder="Nhập số điện thoại">
+                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" asp-for="Password" class="form-control input-password" placeholder="Nhập mật khẩu">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" asp-for="ConfirmPassword" class="form-control input-password" placeholder="Xác nhận mật khẩu">
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <p class="mb-0 text-center color-grey">
+                        Bấm vào đăng ký nghĩa là bạn đã đọc và đồng ý với<br>
+                        <a href="#" class="color-green font-weight-bold">Điều khoản sử dụng của MinhLamCons</a>
+                    </p>
+                </div>
+                <div class="form-group mb-4 text-center">
+                    <button type="submit" class="btn btn-info">Đăng Ký</button>
+                </div>
+                <div class="form-group mb-0">
+                    <p class="mb-0 text-center color-grey">Đã có tài khoản? <a asp-action="Login" class="color-green font-weight-bold">Đăng nhập</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
+

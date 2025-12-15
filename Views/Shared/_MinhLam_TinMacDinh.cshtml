@@ -1,0 +1,18 @@
+﻿@model TbNews
+@{
+    <title>@Model.Name</title>
+    <meta property="og:title" content="@Model.SEOTitle" />
+    <meta property="og:description" content="@Model.SEODescription" />
+    <meta property="og:image" content="@Model.Image" />
+    <meta http-equiv="keywords" name="keywords" content="@Model.SEOKeyword" />
+    <meta http-equiv="description" name="description" content="@Model.SEODescription" />
+    <meta name="author" content="MINHLAMCONS.COM">
+}
+<div class="row">
+    <div class="col-md-12 newsDetail">
+        <p class="pagetitle">@Model.Name</p>
+        <hr class="pageline" />
+        <p class="pagedes">@Model.Des</p>
+        <p>@Html.Raw(minhlamcons.Extensions.StringProcessingExtenssion.processed_img(Model.Content))</p>
+    </div>
+</div>

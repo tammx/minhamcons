@@ -1,0 +1,65 @@
+﻿@model minhlamcons.Areas.Mod.ViewModels.SiteSettingAddModel
+@{
+    ViewData["Title"] = "AddSiteSetting";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<section class="content-header">
+    <h1>
+        Cấu hình website
+        <small>Thêm mới</small>
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Id">Loại cấu hình</label>
+                    <select asp-for="Id" id="LoaiCauHinh" class="form-control" onchange="appendNoiDung()">
+                        <option value="">Chọn loại cấu hình</option>
+                        @if (Model.SiteSettingType != null && Model.SiteSettingType.Any())
+                        {
+                            foreach (var item in Model.SiteSettingType)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group" id="noidung_ele"></div>
+                <button type="submit" class="btn btn-primary">Thêm</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    .img_ct_up {
+        margin-right: 20px;
+        margin-bottom: 10px;
+    }
+
+    .btn-remove-img {
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-bottom: 10px;
+        width: 80px;
+        height: 30px;
+    }
+
+    .image_container {
+        height: auto;
+    }
+</style>
+
+<script>
+    const urls = {
+        UploadImage: '@Url.Action("UploadImage", "SiteSetting")',
+        DeleteCauHinhImage: '@Url.Action("DeleteImage", "SiteSetting")'
+    }
+</script>
+<script src="~/dist/js/admin/CauHinhWebsite.js"></script>
+

@@ -1,0 +1,168 @@
+﻿@inject SignInManager<ApplicationUser> signInManager;
+@{
+    ApplicationUser currUser = null;
+    if (signInManager.IsSignedIn(User))
+        currUser = await signInManager.UserManager.FindByNameAsync(User.Identity.Name);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MinhLamCons - Trang Quản Trị</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="~/bower_components/Ionicons/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/dist/css/skins/skin-blue.min.css">
+    <!-- Boostrap select css -->
+    <link href="~/bower_components/bootstrap-select-1.12.0/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <!-- sweetalert2 css -->
+    <link href="~/css/admin.css" rel="stylesheet" />
+    <link href="~/bower_components/sweetalert2-9.10.0/package/dist/sweetalert2.min.css" rel="stylesheet" />
+    <!-- jQuery 3 -->
+    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- Ck editor js -->
+    <script src="~/bower_components/ckeditor/ckeditor.js"></script>
+    <!-- Boostrap select js -->
+    <script src="~/bower_components/bootstrap-select-1.12.0/dist/js/bootstrap-select.min.js"></script>
+    <!-- sweetalert2 js -->
+    <script src="~/bower_components/sweetalert2-9.10.0/package/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="skin-blue sidebar-mini">
+    <div class="wrapper">
+        <!-- Main Header -->
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="/admin" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini">MinhLamCons</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>AdminPanel</b></span>
+            </a>
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account Menu -->
+                        <li class="dropdown user user-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!-- The user image in the navbar-->
+                                <img src="~/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                @if (signInManager.IsSignedIn(User))
+                                {
+                                    <span class="hidden-xs">@currUser.FullName</span>
+                                }
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- The user image in the menu -->
+                                <li class="user-header">
+                                    <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    @if (signInManager.IsSignedIn(User))
+                                    {
+                                        <p>
+                                            @currUser.FullName
+                                            <small>Member since Nov. 2012</small>
+                                        </p>
+                                    }
+
+                                </li>
+                                <!-- Menu Body -->
+                                <li class="user-body">
+                                    <div class="row">
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Account</a>
+                                        </div>
+                                    </div>
+                                    <!-- /.row -->
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    @if (signInManager.IsSignedIn(User))
+                                    {
+                                        <div class="pull-right">
+                                            <a class="btn btn-default btn-flat" href="@Url.Action("logout", "account", new {Area="" })">Thoát</a>
+                                        </div>
+                                    }
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <p>@currUser.FullName</p>
+                        }
+                        <!-- Status -->
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">CHỨC NĂNG</li>
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li><a asp-area="admin" asp-controller="role" asp-action="listrole"><i class="fa fa-link"></i> <span>Role & Account</span></a></li>
+                        }
+                        <li><a asp-area="mod" asp-controller="page" asp-action="index"><i class="fa fa-link"></i> <span>Page</span></a></li>
+                        <li><a asp-area="mod" asp-controller="news" asp-action="index"><i class="fa fa-link"></i> <span>News</span></a></li>
+                        <li><a asp-area="mod" asp-controller="sitesetting" asp-action="index"><i class="fa fa-link"></i> <span>Site Setting</span></a></li>
+                    }
+                    <li><a href="/"><i class="fa fa-eye"></i> <span>View website</span></a></li>
+
+
+                </ul>
+                <!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            @RenderBody()
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- Default to the left -->
+            <strong>MinhLamCons - Trang Quản Trị</strong>. Số điện thoại hỗ trợ: 0911 32 12 02 (Mr Tâm).
+        </footer>
+    </div>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/adminlte.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

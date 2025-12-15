@@ -1,0 +1,17 @@
+﻿@model minhlamcons.Models.Database.TbPage
+@{
+    ViewData["Title"] = "AddPage";
+}
+
+<h1>AddPage</h1>
+<form method="post">
+    <p>
+        <input asp-for="Name" />
+    </p>
+    <p>
+        <input asp-for="Url" />
+    </p>
+
+    
+    <button type="submit" class="btn btn-primary">Thêm</button>
+</form>

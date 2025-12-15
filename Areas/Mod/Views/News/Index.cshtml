@@ -1,0 +1,120 @@
+﻿@model minhlamcons.Areas.Mod.ViewModels.NewsViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Controller"] = "News";
+    ViewData["Action"] = "Index";
+    int i = 0;
+}
+<section class="content-header">
+    <h1>
+        Bài viết
+        <small>Danh sách bài viết</small>
+    </h1>
+</section>
+<section class="content container-fluid">
+
+    @if (Model.LstNews.Data.Any())
+    {
+        <div class="row">
+            <div class="col-md-6">
+                @if (ViewBag.LstPage != null)
+                {
+                    <div class="row">
+                        <div class="col-md-3 text-right"><span style="display:block;margin-top:7px">Trang</span></div>
+                        <div class="col-md-9"><select id="ddlPage" data-search="true" class="custom-select" asp-for="PageId" asp-items="@(new SelectList(ViewBag.LstPage,"Id","Name"))"></select></div>
+                    </div>
+                }
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-primary pull-right" asp-controller="News" asp-action="AddNews">Thêm bài viết</a>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-body no-padding">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="50px">Stt</th>
+                                    <th width="150px">Hình đại diện</th>
+                                    <th>Tiêu đề</th>
+                                    <th width="150px">Ngày tạo</th>
+                                    <th width="50px"></th>
+                                    <th width="50px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.LstNews.Data)
+                                {
+                                    <tr>
+                                        <td>@(++i)</td>
+                                        <td><img src="~/uploads/news/@item.Image" onerror="this.src='/dist/img/default.jpg';" style="width:150px; height:150px" /> </td>
+                                        <td>@item.Name</td>
+                                        <td>@item.CreatedDate</td>
+                                        <td>
+                                            <a class="btn btn-primary" asp-controller="news" asp-action="editnews" asp-route-id="@item.Id">Sửa</a>
+                                        </td>
+                                        <td>
+                                            <form method="post" asp-action="deletenews" asp-route-id="@item.Id">
+                                                <button class="btn btn-danger" onclick="return confirm('Chắc chắn xóa bài viết này???')"><i class="fa fa-trash"></i> Xóa</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div style="margin-left:10px">
+                            <partial name="_PaginationPartial" view-data="ViewData" model="Model.LstNews" />
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <div style="padding:10px" class="box box-success">
+            <div class="box-body">
+                <h4>Chưa có bài viết nào</h4>
+                <h5 class="card-title">Bấm vào nút dưới để thêm bài viết</h5>
+                <a class="btn btn-primary mb-3" asp-controller="news" asp-action="addnews">Thêm bài viết</a>
+            </div>
+        </div>
+    }
+</section>
+@section scripts{
+    <link href="~/lib/jquery/dist/jquery-customselect-1.9.1.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery-customselect-1.9.1.min.js"></script>
+    <script>
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+                function (m, key, value) {
+                    vars[key] = value;
+                });
+            return vars;
+        }
+
+
+        $(document).ready(function () {
+            $('#ddlPage').change(function () {
+                var val = $(this).val();
+                //var parentid = getUrlVars()["parentid"];
+                var newUrl = "@Url.Action("", "News")" + "?pageid=" + val;
+                location.href = newUrl;
+            });
+            $('#ddlPage').customselect({
+                search: true,
+                hoveropen: false
+            });
+        });
+
+
+    </script>
+}
+
+

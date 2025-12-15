@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "LoadImage";
+    Layout = null;
+}
+@model IEnumerable<string>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<div class="row">
+    @foreach (var image in Model)
+    {
+        <div class="col-md-3">
+            <a href="#" class="returnImage" data-url="@image">
+                <img src="@image" id="#image" data-source="@image" width="200" height="200" />
+            </a>
+            <form method="post" action="/CKEditorUpload/Delete">
+                <input id="path" name="path" type="hidden" value="@image" />
+                <input type="submit" value="Xóa" class="btn btn-danger" onclick="return confirm('Xóa hình này?')" />
+            </form>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".returnImage").click("click", function (e) {
+            var urlImage = $(this).attr("data-url");
+            returnFileUrl(urlImage);
+        });
+    });
+
+    function getUrlParam(paramName) {
+        var reParam = new RegExp('(?:[\?&]|&)' + paramName + '=([^&]+)', 'i');
+        var match = window.location.search.match(reParam);
+        console.log(match);
+        return (match && match.length > 1) ? match[1] : null;
+    }
+
+    function returnFileUrl(fileUrl) {
+        var funcNum = getUrlParam('CKEditorFuncNum');
+        console.log(fileUrl);
+        window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+        window.close();
+    }
+</script>

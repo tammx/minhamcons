@@ -1,0 +1,38 @@
+﻿@model List<UserRoleViewModel>
+@{
+    ViewData["Title"] = "User thuộc role";
+    var roleId = ViewBag.roleId;
+}
+<section class="content-header">
+    <h1>
+        Quản lý Role
+        <small>Thêm/xóa user khỏi role</small>
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <form method="post">
+        <div class="card">
+            <div class="card-body" style="display:table;margin-bottom:15px">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <div class="form-check m-1 tammxspan">
+                        <input type="hidden" asp-for="@Model[i].UserId" />
+                        <input type="hidden" asp-for="@Model[i].UserName" />
+                        <input class="form-check-input" asp-for="@Model[i].IsSelected" />
+                        <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                            @Model[i].HoTen (@Model[i].UserName)
+                        </label>
+                    </div>
+                }
+            </div>
+            <div class="card-footer">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a asp-action="EditRole" asp-route-id="@roleId" class="btn btn-primary">Hủy</a>
+            </div>
+        </div>
+    </form>
+</section>
+
+
+

@@ -1,0 +1,85 @@
+﻿@model cloudscribe.Pagination.Models.PagedResult<TbSiteSetting>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Controller"] = "SiteSetting";
+    ViewData["Action"] = "Index";
+    int i = 0;
+}
+<section class="content-header">
+    <h1>
+        Cấu hình website
+        <small>Danh sách</small>
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    @if (Model.Data != null && Model.Data.Any())
+    {
+        <div class="row">
+                <div class="col-md-12">
+                    <a class="btn btn-primary mb-3 pull-right" asp-controller="sitesetting" asp-action="addsitesetting"><i class="fa fa-plus"></i> Thêm cấu hình website</a>
+                </div>
+            </div>
+
+
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-body no-padding">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="50px">Stt</th>
+                                    <th width="150px">Loại cấu hình</th>
+                                    <th>Nội dung</th>
+                                    <th width="50px"></th>
+                                    <th width="50px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Data)
+                                {
+                                    <tr>
+                                        <td>@(++i)</td>
+                                        <td>@EnumExtensions.GetDescription(item.Id)</td>
+                                        <td style="overflow-wrap: anywhere">@item.Content</td>
+                                        <td>
+                                            <a class="btn btn-info" asp-action="editsitesetting" asp-route-id="@((int)item.Id)"><i class="fa fa-edit"></i> Sửa</a>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger delete-item" data-id="@((int)item.Id)"><i class="fa fa-trash"></i> Xóa</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div style="margin-left:10px">
+                            <partial name="_PaginationPartial" view-data="ViewData" model="Model" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <div style="padding:10px" class="box box-success">
+            <div class="box-body no-padding">
+                <h4>Chưa có cấu hình website nào</h4>
+                <h5 class="card-title">Bấm vào nút dưới để thêm cấu hình website</h5>
+                <a class="btn btn-primary mb-3" asp-controller="sitesetting" asp-action="addsitesetting">Thêm cấu hình website</a>
+            </div>
+        </div>
+
+    }
+</section>
+
+<script src="~/dist/js/all.js"></script>
+<script>
+    const urls = {
+        "delete": '@Url.Action("deletesitesetting", "sitesetting")'
+    }
+</script>
+

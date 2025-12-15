@@ -1,0 +1,31 @@
+﻿@model CreateRoleViewModel
+@{
+    ViewData["Title"] = "Thêm role";
+}
+<section class="content-header">
+    <h1>
+        Quản lý Role
+        <small>Thêm role</small>
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="RoleName"></label>
+                    <input asp-for="RoleName" class="form-control" />
+                    <span asp-validation-for="RoleName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RoleDes"></label>
+                    <input asp-for="RoleDes" class="form-control" />
+                    <span asp-validation-for="RoleDes" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Thêm</button>
+            </form>
+        </div>
+    </div>
+</section>

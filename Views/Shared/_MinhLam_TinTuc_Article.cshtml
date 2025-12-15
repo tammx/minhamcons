@@ -1,0 +1,48 @@
+﻿@model NewsDetailViewModel
+@{
+    <title>@Model.News.Name</title>
+    <meta property="og:title" content="@Model.News.SEOTitle" />
+    <meta property="og:description" content="@Model.News.SEODescription" />
+    <meta property="og:image" content="@Model.News.Image" />
+    <meta http-equiv="keywords" name="keywords" content="@Model.News.SEOKeyword" />
+    <meta http-equiv="description" name="description" content="@Model.News.SEODescription" />
+    <meta name="author" content="MINHLAMCONS.COM">
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-9 newsDetail">
+                @if (Model.News != null)
+                {
+                    <p class="posttitle">@Model.News.Name</p>
+                    <hr class="postline" />
+
+
+                    <p>@Html.Raw(minhlamcons.Extensions.StringProcessingExtenssion.processed_img(Model.News.Content))</p>
+                }
+            </div>
+            <div class="col-md-3">
+                @if (Model.PageWithNews != null)
+                {
+                    @foreach (var item in Model.PageWithNews)
+                    {
+                        <p class="sidebartitle">@item.PageTitle</p>
+                        <div class="sidebarcontent">
+                            @foreach (var news in item.LstNews)
+                            {
+                                <div class="item">
+                                    <a href="@news.Url">
+                                        <img class="img-fluid" style="height:126px" src="~/uploads/news/@news.Image" />
+                                        <div>@news.Name</div>
+                                    </a>
+                                </div>
+
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
